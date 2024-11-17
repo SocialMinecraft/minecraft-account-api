@@ -95,7 +95,7 @@ pub async fn get_endpoint(ctx: web::Data<State>, token: web::Path<String>) -> im
             x.deaths = x.deaths + ras.deaths;
             x.playtime_sec = x.playtime_sec + ras.playtime_sec;
             x.servers.push(ras);
-        }
+        };
         resp.accounts.push(x);
     }
 
