@@ -1,0 +1,9 @@
+# release.toml
+sign-commit = true
+sign-tag = true
+push = true
+publish = false
+pre-release-commit-message = "Release {{version}}"
+tag-message = "Release {{version}}"
+tag-name = "v{{version}}"
+pre-release-hook = ["git", "cliff", "-o", "CHANGELOG.md", "--tag", "{{version}}" ]
