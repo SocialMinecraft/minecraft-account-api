@@ -8,4 +8,4 @@ COPY . .
 ENV SQLX_OFFLINE=true
 RUN cargo install --path .
 
-CMD ["template"]
+CMD ["minecraft-account-api"]
