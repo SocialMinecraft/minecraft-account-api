@@ -2,6 +2,7 @@ mod proto;
 mod util;
 mod state;
 mod token_to_account;
+mod get_endpoint;
 
 use std::env;
 use actix_web::{web, App, HttpServer};
@@ -38,8 +39,7 @@ async fn main() -> Result<()> {
     HttpServer::new( move || {
         App::new()
             .app_data(web::Data::new(State::new(nc.clone())))
-            //.service(get_endpoint::get_endpoint)
-            //.service(update_endpoint::update_endpoint)
+            .service(get_endpoint::get_endpoint)
     })
         .bind(listen)?
         .run()
