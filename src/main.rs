@@ -40,8 +40,8 @@ async fn main() -> Result<()> {
     HttpServer::new( move || {
         App::new()
             .app_data(web::Data::new(State::new(nc.clone())))
-            .service(get_endpoint::get_endpoint)
             .service(remove_endpoint::remove_endpoint)
+            .service(get_endpoint::get_endpoint)
     })
         .bind(listen)?
         .run()
