@@ -79,7 +79,7 @@ pub async fn get_endpoint(ctx: web::Data<State>, token: web::Path<String>) -> im
             deaths: 0,
             servers: vec![]
         };
-        let uuid =
+
         for s in &stats {
             if !s.minecraft_uuid.eq(&account.minecraft_uuid) {
                 info!("{} <-> {}", s.minecraft_uuid, account.minecraft_uuid);
