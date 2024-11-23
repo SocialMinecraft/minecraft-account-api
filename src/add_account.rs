@@ -17,7 +17,7 @@ struct Response {
 #[derive(Deserialize)]
 struct Request {
     minecraft_name: String,
-    minecraft_uuid: String,
+    minecraft_uuid: Option<String>,
 }
 
 #[post("/api/{token}/minecraft_accounts")]
@@ -63,7 +63,7 @@ pub async fn add_endpoint(ctx: web::Data<State>, path: web::Path<String>,  body:
     HttpResponse::Ok().json(Response{error:None})
 }
 
-async fn add_minecraft_account(nc: Client, account: &Account, uuid: &str, username: &str) -> anyhow::Result<Option<String>> {
+async fn add_minecraft_account(nc: Client, account: &Account, uuid: &Option<String>, username: &str) -> anyhow::Result<Option<String>> {
 
     if account.discord_id.is_none() {
         return Ok(None);
@@ -72,7 +72,7 @@ async fn add_minecraft_account(nc: Client, account: &Account, uuid: &str, userna
     let mut msg = AddMinecraftAccountRequest::new();
     msg.user_id = Some(account.id.clone());
     msg.deprecated_discord_id = account.discord_id.clone();
-    msg.minecraft_uuid = Some(uuid.to_string());
+    msg.minecraft_uuid = uuid.clone();
     msg.minecraft_username = username.to_string();
     msg.first_name = account.first_name.clone().unwrap_or("".to_string());
     let encoded: Vec<u8> = msg.write_to_bytes()?;
