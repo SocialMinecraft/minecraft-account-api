@@ -2,7 +2,7 @@ use actix_web::{delete, web, HttpResponse, Responder};
 use async_nats::Client;
 use protobuf::{Message};
 use serde::Serialize;
-use tracing::{error, warn};
+use tracing::{error, info, warn};
 use uuid::Uuid;
 use crate::proto::account::Account;
 use crate::proto::minecraft_account_remove::RemoveMinecraftAccountRequest;
@@ -16,7 +16,11 @@ struct Response {
 }
 
 #[delete("/api/{token}/minecraft_accounts/{uuid}")]
-pub async fn remove_endpoint(ctx: web::Data<State>, token: web::Path<String>, uuid: web::Path<String>) -> impl Responder {
+pub async fn remove_endpoint(ctx: web::Data<State>, path: web::Path<(String, String)>) -> impl Responder {
+
+    let (token, uuid) = path.into_inner();
+
+    info!("Hello");
 
     // validate uuid
     match Uuid::parse_str(uuid.as_str()) {
